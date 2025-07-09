@@ -190,132 +190,522 @@
             color: #8B0000;
             text-decoration: none;
             padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 10px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB PAYMENT IIFSTECU</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #ff2d2d;
+            --dark-red: #a80101;
+            --darker-red: #5c0000;
+            --light-red: #ff6b6b;
+            --text-light: #ffebeb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red), var(--darker-red));
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .profile {
+            width: 160px;
+            height: 160px;
+            border-radius: 500%;
+            object-fit: cover;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .profile:hover {
+            transform: scale(1.08) rotate(5deg);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(to right, #ffffff, #ffcccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 35px 0 20px;
+            color: var(--light-red);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+            display: inline-block;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .payment-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .qr-container {
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .qr-code {
+            width: 220px;
+            height: 220px;
+            border-radius: 15px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .qr-code:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .payment-details {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-red);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
         
-        .contact-link:hover {
-            background-color: #FFFFFF;
-            transform: scale(1.05);
+        .payment-details:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .payment-details p {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .payment-details strong {
+            color: var(--light-red);
+            font-weight: 600;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(to right, var(--primary-red), var(--dark-red));
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.3rem;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(to right, var(--light-red), var(--primary-red));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0) }
+            }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-red);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid var(--light-red);
+        }
+        
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .product-price {
+            margin-bottom: 20px;
+            color: var(--light-red);
+            font-size: 1.1rem;
+        }
+        
+        .order-btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary-red), var(--dark-red));
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .order-btn:hover {
+            background: linear-gradient(to right, var(--light-red), var(--primary-red));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .order-btn:active {
+            transform: translateY(0);
+        }
+        
+        .channel-btn {
+            display: inline-block;
+            background: linear-gradient(to right, #0088cc, #00aced);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .channel-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .contact-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .contact-btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary-red), var(--dark-red));
+            color: white;
+            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .contact-btn:hover {
+            background: linear-gradient(to right, var(--light-red), var(--primary-red));
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .warning-note {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-red);
+            margin-top: 20px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        .warning{
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-red);
+            margin-top: 20px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
         }
         
         footer {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 50px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+            animation: fadeIn 2s ease;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            h3 {
+               font-size: 1.7rem;
+               background: white(250px)
+               
+            }
+            
+            .payment-section {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .qr-code {
+                width: 250px;
+                height: 250px;
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-red);
+            font-size: 2.6rem;
+            
+           
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="profile">
-            <img src="https://files.catbox.moe/1g3gc3.jpg" alt="IIF Profile" class="profile-img">
-            <h1>Helo i`am iifstecu, buy sc,panel dll pv me</h1>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title">PAYMENT</h2>
-            <div class="payment-method">
-                <div class="payment-card">
-                    <img src="https://files.catbox.moe/gb3d1e.jpg" alt="QRIS" class="qr-code">
-                    <div class="payment-info">
-                        <p>Scan Qris lalu kirim ke iif</p>
-                    </div>
+        <header>
+            <img src="https://files.catbox.moe/1g3gc3.jpg" alt="IIF Profile" class="profile">
+            <h1>IIFSTECU PAYMENT</h1>
+        </header>
+        <center>
+          
+        <section id="payment" class="section">
+            <h2><i class="fas fa-qrcode"></i> PAYMENT METHODE</h2>
+            <div class="payment-section">
+                <div class="qr-container">
+                    <img src="https://files.catbox.moe/gb3d1e.jpg" alt="QRIS Code" class="qr-code">
+                    </button>
+                    <div class="warning">
+                        <i class="fas fa-exclamation-triangle"></i> SCAN DAN KIRIM BUKTI KE IIF
+        </section>
                 </div>
-                
-                <div class="payment-card">
-                    <h3>DANA</h3>
-                    <div class="payment-info">
-                        <p>NOMOR DANA:</p>
-                        <p id="dana-number">085721304943</p>
-                        <p>A/N KUSXXX</p>
-                        <button class="copy-btn" onclick="copyToClipboard('dana-number')">SALIN NUMBER DANA</button>
-                        <p><small>PASTIKAN TF KE NOMOR INI</small></p>
+                <div class="payment-details">
+                    <p><strong><i class="fas fa-wallet"></i> DANA:</strong> 085721304943</p>
+                    <p><strong><i class="fas fa-user"></i> A/N:</strong> KUSXXX</p>
+                    <button class="copy-btn" onclick="copyToClipboard('085721304943')">
+                        <i class="far fa-copy"></i> SALIN NUMBER DANA
+                    </button>
+                    <div class="warning-note">
+                        <i class="fas fa-exclamation-triangle"></i> PASTIKAN TF KE NOMOR INI
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         
-        <div class="section">
-            <h2 class="section-title"></h2>
-            <a href="https://t.me/iifganteng" class="order-btn" target="_blank">JOIN CHANEL IIF</a>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title"></h2>
-            <a href="https://whatsapp.com/channel/0029VbAvOrUKWEKspE2ieQ00" class="order-btn" target="_blank">JOIN CHANEL WA IIF</a>
-      </div>
-        
-        <div class="section">
-            <h2 class="section-title">PRODUCT IIF</h2>
-            <div class="product-list">
+        <section id="products" class="section">
+            <h2><i class="fas fa-shopping-bag"></i> PRODUCT IIF</h2>
+            <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-name">SC TRAZ INVICTUS V 2.7</div>
-                    <div class="product-price">NO UP 30K</div>
-                    <div class="product-price">FRE UP 60K</div>
-                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">Order Now</a>
+                    <h3 class="product-title">SC TRAZ INVICTUS V 2.7</h3>
+                    <p class="product-price">NO UP 30K<br>FRE UP 60K</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
                 </div>
                 
                 <div class="product-card">
-                    <div class="product-name">SC XFINITY SYSTEM V5.0</div>
-                    <div class="product-price">NO UP 20K</div>
-                    <div class="product-price">FRE UP 25K</div>
-                    <div class="product-price">RESELER 30K</div>
-                    <div class="product-price">PT SC 40K</div>
-                    <div class="product-price">MOD SC 50K</div>
-                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">Order Now</a>
+                    <h3 class="product-title">SC XFINITY SYSTEM V5.0</h3>
+                    <p class="product-price">NO UP 20K<br>FRE UP 25K<br>RESELER 30K<br>PT SC 40K<br>MOD SC 50K</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
                 </div>
                 
                 <div class="product-card">
-                    <div class="product-name">SC ANUXSTREAM V4.0</div>
-                    <div class="product-price">NO UP 15K</div>
-                    <div class="product-price">FRE UP 40K</div>
-                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">Order Now</a>
+                    <h3 class="product-title">SC ANUXSTREAM V4.0</h3>
+                    <p class="product-price">NO UP 15K<br>FRE UP 40K</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
                 </div>
                 
                 <div class="product-card">
-                    <div class="product-name">SC AXZX V2.0</div>
-                    <div class="product-price">NO UP 20K</div>
-                    <div class="product-price">FRE UP 30K</div>
-                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">Order Now</a>
+                    <h3 class="product-title">SC AXZX V2.0</h3>
+                    <p class="product-price">NO UP 20K<br>FRE UP 30K</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
                 </div>
                 
                 <div class="product-card">
-                    <div class="product-name">RESELER PANEL 3K</div>
-                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">Order Now</a>
+                    <h3 class="product-title">RESELER PANEL 3K</h3>
+                    <p class="product-price">&nbsp;</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
                 </div>
                 
                 <div class="product-card">
-                    <div class="product-name">PANEL UNLI 2K</div>
-                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">Order Now</a>
+                    <h3 class="product-title">PANEL UNLI 2K</h3>
+                    <p class="product-price">&nbsp;</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">JASBUG 2K</h3>
+                    <p class="product-price">&nbsp;</p>
+                    <a href="https://t.me/iiframijud1" class="order-btn" target="_blank">
+                        <i class="fas fa-cart-plus"></i> Order Now
+                    </a>
                 </div>
             </div>
-        </div>
+        </section>
         
-        <div class="section">
-            <h2 class="section-title">CONTACT ME</h2>
-            <a href="https://t.me/iiframijud1" class="contact-link" target="_blank">Contact on Telegram</a>
-        </div>
+        <section id="contact" class="contact-section section">
+            <h2><i class="fas fa-envelope"></i> CONTACT ME</h2>
+            <center>
+            <a href="https://t.me/iiframijud1" class="contact-btn" target="_blank">
+                <i class="fab fa-telegram"></i> TELEGRAM ORDER
+            </a>
+        </section>
         
         <footer>
-            <p>&copy; © 2025 IIFSTECU. All Rights Reserved.</p>
+            &copy; 2023 IIFSTECU - All Rights Reserved
         </footer>
     </div>
     
     <script>
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.innerText;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard: ' + text);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Nomor DANA berhasil disalin: ' + text);
+            }, function(err) {
+                console.error('Gagal menyalin teks: ', err);
             });
         }
+        
+        // Add animation to elements when they come into view
+        const animateOnScroll = () => {
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight - 100) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Initialize animations
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'all 0.6s ease';
+            });
+            
+            animateOnScroll();
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
     </script>
 </body>
-                        </html>
+    </html>
